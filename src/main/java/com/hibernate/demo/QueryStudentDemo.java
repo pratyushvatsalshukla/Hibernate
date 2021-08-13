@@ -16,6 +16,7 @@ public class QueryStudentDemo {
 								.addAnnotatedClass(Student.class)
 								.buildSessionFactory() ;
 		// Create a Sessioon
+		Session session = factory.getCurrentSession() ;
 		try {
 		
 			// Start begin TRansaction
@@ -39,7 +40,16 @@ public class QueryStudentDemo {
 			{
 				System.out.println(tempStudent);
 			}
-//			
+			
+			theStudents = session.createQuery("from Student s where s.lastName = 'Doe' or s.firstName = 'Daffy'").getResultList() ;
+				
+			System.out.println("Students with LastName Doe and FirstName Daffy");
+			for(Student tempStudent : theStudents)
+			{
+				System.out.println(tempStudent);
+			}
+			
+			theStudents = session.createQuery("from Student s where s.email like = '%doe.com'").getResultList() ;
 			// Commit Transaction
 			factory.getCurrentSession().getTransaction().commit();
 		}	
